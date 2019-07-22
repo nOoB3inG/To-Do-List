@@ -1,41 +1,51 @@
 var todoList = {
   todos: [],
-  displayTodos: function(){
-    console.log('My Todos: ');
-    for(var i = 0; i < this.todos.length; i++){
-      console.log(this.todos[i].todoText, this.todos[i].completed);
- }
+  displayTodo: function(){
+    if(this.todos.length === 0){
+      console.log('Todo list is empty!');
+  }   else{ 
+           console.log('My Todo List');
+           for(var i = 0; i < this.todos.length; i++){
+              if(this.todos[i].completed === true){
+                console.log('(x)',this.todos[i].todoText,this.todos[i].completed);
+              }else{console.log('( )',this.todos[i].todoText,this.todos[i].completed);}
+            }
+  }
 },
   addTodo: function(todoText){
     this.todos.push({
       todoText: todoText,
       completed: false
 });
-    this.displayTodos();
+    this.displayTodo();
+    console.log('Added Successfully');
 },
- changeTodo: function(pos,value){
-    this.todos[pos].todoText = value;
-    this.displayTodos();
+  deleteTodo: function(pos){
+    this.todos.splice(pos,1);
+    this.displayTodo();
+    console.log('Deleted Successfully.');
 },
- deleteTodo: function(pos){
-   this.todos.splice(pos,1);
-   this.displayTodos();
+  changeTodo: function(pos, todoText){
+    this.todos[pos].todoText = todoText;
+    this.displayTodo();
+    console.log('Text Changed.');
 },
- toggleCompleted: function(pos){
-   var todo = this.todos[pos];
-   todo.completed = !todo.completed;
-   this.displayTodos();
+  toggleCompleted: function(pos){
+    var todo = this.todos[pos];
+    todo.completed = !todo.completed;
+    this.displayTodo();
+    console.log('Toggled.');
 },
- checkCompleted: function(){
-   var lastTodo = this.todos[this.todos.length - 1];
-   var lastTodoStatus = lastTodo.completed;
-   if( lastTodoStatus == true){
-     console.log('Todos List is Completed.');
- } else{
-      console.log('Todos List is not complete!');
-};
+  toggleAll: function(){
+    for(var i = 0; i < this.todos.length ; i++){
+      if(this.todos[i].completed === true){
+        this.todos[i].completed = true;  
+}else{ this.todos[i].completed = !this.todos[i].completed;
+ }
+  this.displayTodo();
+} 
+}
 }
 
-}
 
         
