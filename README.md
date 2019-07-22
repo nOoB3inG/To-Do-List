@@ -1,1 +1,1 @@
-# ToDo JavaScript App
+# ToDo Manager JavaScript App
