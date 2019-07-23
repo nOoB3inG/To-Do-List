@@ -1,34 +1,35 @@
-var todoList = {
+var todoList = { 
   todos: [],
   displayTodo: function(){
     console.log('My Todos: ');
-    if(this.todos.length === 0){
-      console.log('Todos List Empty!');
-}
+    if(this.todos.length === 0)
+   	  {
+  		console.log('Todo List is empty!');
+	  }
     else{
-      for(var i = 0; i < this.todos.length; i++){
-        if(this.todos[i].completed === true){
-          console.log('(x)',this.todos[i].todoText,this.todos[i].completed); 
-        }
-        else{
-          console.log('( )',this.todos[i].todoText,this.todos[i].completed);
-        }
-  }
- }
+     for(var i = 0; i < this.todos.length; i++){
+       if(this.todos[i].completed === true){ 
+         console.log('(x)', this.todos[i].todoText,this.todos[i].completed);
+		}
+       else {
+    	 console.log('( )',this.todos[i].todoText,this.todos[i].completed);
+		}	
+     }
+   }
 },
   addTodo: function(todoText){
     this.todos.push({
       todoText: todoText,
       completed: false
-});
+    });
+    this.displayTodo();
+},
+  changeTodo: function(pos,todoText){
+    this.todos[pos].todoText = todoText;
     this.displayTodo();
 },
   deleteTodo: function(pos){
-    this.todos.splice(pos,1);
-    this.displayTodo();
-},
-  changeTodo: function(pos, todoText){
-    this.todos[pos].todoText = todoText;
+    this.todos.splice(pos, 1);
     this.displayTodo();
 },
   toggleCompleted: function(pos){
@@ -36,27 +37,28 @@ var todoList = {
     this.displayTodo();
 },
   toggleAll: function(){
-    var totalTodos = this.todos.length;
-    var completeTodo = 0;
+    var totalTodo = this.todos.length;
     var completeTrue = 0;
-    for(var i = 0; i < totalTodos; i++){
-      if(this.todos[i].completed === false ){
-        completeTodo++;
+    var completeFalse = 0;
+    for(var i = 0; i < totalTodo; i++){
+      if(this.todos[i].completed === false){
+        completeFalse++;
       }
-      if(this.todos[i].completed === true){
-         completeTrue++;
-      }
+      else{completeTrue++}     
     }
-    if(completeTrue===totalTodos){
-      for(var i = 0; i < this.todos.length; i++){
-        this.todos[i].completed = false;  
- }
-}
-    if(completeTodo===totalTodos){
-      for(var i = 0; i < this.todos.length; i++){
-        this.todos[i].completed = true;
+     if(completeFalse === totalTodo){
+       for(var i = 0; i < totalTodo; i++){
+         this.todos[i].completed = true;
+       } 
      }
-   }
+     else if(completeTrue === totalTodo){  
+       for(var i = 0; i < totalTodo; i++){
+         this.todos[i].completed = false;
+       } 
+      }
+    else{  for(var i = 0; i < totalTodo; i++){
+         this.todos[i].completed = true;
+       } }
      this.displayTodo();
-},
+}
 };
