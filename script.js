@@ -1,64 +1,142 @@
+// Code goes here
 var todoList = { 
   todos: [],
-  displayTodo: function(){
-    console.log('My Todos: ');
-    if(this.todos.length === 0)
-   	  {
-  		console.log('Todo List is empty!');
-	  }
-    else{
-     for(var i = 0; i < this.todos.length; i++){
-       if(this.todos[i].completed === true){ 
-         console.log('(x)', this.todos[i].todoText,this.todos[i].completed);
-		}
-       else {
-    	 console.log('( )',this.todos[i].todoText,this.todos[i].completed);
-		}	
-     }
-   }
-},
+  
   addTodo: function(todoText){
     this.todos.push({
       todoText: todoText,
       completed: false
     });
-    this.displayTodo();
+  
 },
+
   changeTodo: function(pos,todoText){
     this.todos[pos].todoText = todoText;
-    this.displayTodo();
+  
 },
+
   deleteTodo: function(pos){
     this.todos.splice(pos, 1);
-    this.displayTodo();
+
 },
+
   toggleCompleted: function(pos){
     this.todos[pos].completed = !this.todos[pos].completed;
-    this.displayTodo();
+
 },
+
   toggleAll: function(){
     var totalTodo = this.todos.length;
     var completeTrue = 0;
     var completeFalse = 0;
-    for(var i = 0; i < totalTodo; i++){
+    var i;
+    for( i = 0; i < totalTodo; i++){
       if(this.todos[i].completed === false){
         completeFalse++;
       }
       else{completeTrue++}     
     }
      if(completeFalse === totalTodo){
-       for(var i = 0; i < totalTodo; i++){
+       for(i = 0; i < totalTodo; i++){
          this.todos[i].completed = true;
        } 
      }
      else if(completeTrue === totalTodo){  
-       for(var i = 0; i < totalTodo; i++){
+       for(i = 0; i < totalTodo; i++){
          this.todos[i].completed = false;
        } 
       }
-    else{  for(var i = 0; i < totalTodo; i++){
+    else{  for(i = 0; i < totalTodo; i++){
          this.todos[i].completed = true;
        } }
-     this.displayTodo();
-}
+     
+  }
 };
+
+var handlers = {
+  
+  addTodoText: function(){
+    var todoText = document.getElementById('addTodoText');
+    todoList.addTodo(todoText.value);
+    todoText.value = '';
+    view.displayTodo();
+  },
+  
+  toggleAll: function(){
+    todoList.toggleAll();
+    view.displayTodo();
+  },
+  
+  changeTodo: function(){
+    var changeTodoPos = document.getElementById('changeTodoPos');
+    var changeTodoText = document.getElementById('changeTodoText');
+    todoList.changeTodo(changeTodoPos.valueAsNumber, changeTodoText.value);
+    changeTodoPos.value = "";
+    changeTodoText.value = "";
+    view.displayTodo();
+  },
+  
+  deleteTodo: function(){
+    var deleteTodoPos = document.getElementById('deleteTodoPos');
+    todoList.deleteTodo(deleteTodoPos.valueAsNumber);
+    deleteTodoPos.value = "";
+    view.displayTodo();
+  },
+  
+  toggleCompleted: function(){
+    var toggleCompletedPos = document.getElementById('toggleCompletedPos');
+    if(toggleCompletedPos.value === '')
+    {
+      alert('Please the enter postion of todo!')
+    }
+    else
+    {  
+    todoList.toggleCompleted(toggleCompletedPos.valueAsNumber);
+    toggleCompletedPos.value = '';
+    }
+    view.displayTodo();
+  }
+  
+};
+
+var view = {
+  
+  displayTodo: function(){
+    
+    var todoUl = document.querySelector('ul');
+    todoUl.innerHTML = '';
+    var todoTextWithCompletion = '';
+    
+    for(var i = 0; i < todoList.todos.length; i++)
+    {
+      var todoLi = document.createElement('li');
+      var todo = todoList.todos[i];
+      if(todoList.todos[i].completed === true)
+      {
+        todoTextWithCompletion = '(x)' + todo.todoText;
+      }
+      else
+      {
+        todoTextWithCompletion = '( )' + todo.todoText;
+      }
+      todoLi.textContent = todoTextWithCompletion;
+      todoUl.appendChild(todoLi);
+    }
+  }
+  
+};
+
+
+// Assign
+// var displayTodoBtn = document.getElementById('displayTodoBtn');
+// var toggleAllBtn = document.getElementById('toggleAllBtn');
+//EventListeners
+// displayTodoBtn.addEventListener('click', function(){
+//   todoList.displayTodo();
+// });
+// toggleAllBtn.addEventListener('click', function(){
+//   todoList.toggleAll();
+
+// });
+
+//handlers (Events handler)
